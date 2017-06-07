@@ -53,7 +53,9 @@ function s($val='' , $exit=0){
 
 function save_log($txt , $filename='log')
 {
-	$dir = RUNDATA_PATH . '/logs/' . SYS_MODULE;
+    $dir = RUNDATA_PATH . 'logs/';
+    if (!is_dir($dir))      mkdir($dir);
+	$dir .= SYS_MODULE;
 	if (!is_dir($dir))		mkdir($dir);
 	$dir .= '/' . date("Y-m-d") . '/';
 	if (!is_dir($dir))		mkdir($dir);

@@ -526,7 +526,7 @@ class Mysql
         {
             $log_name=SYS_MODULE.'_'.$log_name;
         }
-        PubFun::save_log($msg,$log_name);
+        save_log($msg,$log_name);
         //}
     }
 
