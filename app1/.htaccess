@@ -1,0 +1,14 @@
+﻿<IfModule mod_rewrite.c>
+RewriteEngine on
+
+# 如果访问的文件存在，则直接访问，不重定向
+#RewriteCond %{REQUEST_FILENAME} !-f
+# 如果访问的目录存在，则直接访问，不重定向
+#RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule !\.(js|ico|gif|jpg|JPG|png|css|html|swf|csv|doc|docx|mp3|json|pdf|ttf|woff|eot|svg|avi|zip|pem|map)$ index.php
+ErrorDocument 404 /404.html
+php_flag magic_quotes_gpc off
+php_flag register_globals off
+</IfModule>
+
