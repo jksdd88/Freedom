@@ -8,9 +8,9 @@ class  IndexController extends \library\Controller
 //		s(date('Y-m-d H:i:s',time()+60));exit;
 //		$a = debug_backtrace();
 //		$b = debug_print_backtrace();
-//		$a = new EnglishWords();
-//		$a->debug();
-//		$a -> select_list('select * from english_words where 1');
+		$a = new EnglishWords();
+		$a->debug();
+		$a -> select_list('select * from english_words where 1');
 
 // 		$this->display(array(),"index.tpl");
  	}

@@ -15,6 +15,16 @@ ini_set('include_path',
 	. ini_get('include_path')
 );
 
+if (APP_DEBUG === $GLOBALS['Freedom']['APP_DEBUG']) {
+    error_reporting(E_ALL ^ E_NOTICE);
+    ini_set('display_errors','On');
+} else {
+    error_reporting(E_ALL);
+    ini_set('display_errors','Off');
+    ini_set('log_errors', 'On');
+    ini_set('error_log', RUNDATA_PATH. 'logs/error.log');
+}
+
 function __autoload($className)
 {
 	$className = explode('\\',$className);

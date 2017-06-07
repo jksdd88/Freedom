@@ -66,15 +66,7 @@ class  Core
 	// 检测开发环境
 	final function setReporting()
 	{
-		if (APP_DEBUG === $GLOBALS['Freedom']['APP_DEBUG']) {
-			 error_reporting(E_ALL ^ E_NOTICE);
-			ini_set('display_errors','On');
-		} else {
-			error_reporting(E_ALL);
-			ini_set('display_errors','Off');
-			ini_set('log_errors', 'On');
-			ini_set('error_log', RUNDATA_PATH. 'logs/error.log');
-		}
+
 	}
 
 	// 删除敏感字符
