@@ -423,77 +423,31 @@ class Mysql
             $charset='utf8';
         }
         //主库配置
-        $master_key = self::getConfigKey($db,false);
-        $master_host = $_SERVER[$master_key];
+        $master_host = $GLOBALS['DBConfig'][$db]['master_host'];
 
         //获取一个从库IP地址 随机
-        $slave_key = self::getConfigKey($db,true);
-        $slave_hosts = explode(',', $_SERVER[$slave_key]);
+        $slave_hosts = explode(',',$GLOBALS['DBConfig'][$db]['slave_host']);
         $slave_host = $slave_hosts[array_rand($slave_hosts)];
 
         $conf = array(
             array(
-                'c' => $charset,
-                'h' => $master_host,
-                'd' => $db ? $db : $_SERVER['SINASRV_DB_NAME'],
-                'u' => $_SERVER['SINASRV_DB_USER'],
-                'p' => $_SERVER['SINASRV_DB_PASS'],
+                'c' =>  $charset,
+                'h' =>  $master_host,
+                'd' =>  $GLOBALS['DBConfig'][$db]['database'],
+                'u' =>  $GLOBALS['DBConfig'][$db]['username'],
+                'p' =>  $GLOBALS['DBConfig'][$db]['password'],
                 's' => array(
                     'c' => $charset,//utf8   utf8mb4
                     'h' => $slave_host,
-                    'd' => $db ? $db : $_SERVER['SINASRV_DB_NAME_R'],
-                    'u' => $_SERVER['SINASRV_DB_USER_R'],
-                    'p' => $_SERVER['SINASRV_DB_PASS_R'],
+                    'd' =>  $GLOBALS['DBConfig'][$db]['database'],
+                    'u' =>  $GLOBALS['DBConfig'][$db]['username'],
+                    'p' =>  $GLOBALS['DBConfig'][$db]['password'],
                 ),
             ),
         );
         if(strpos($conf[0]['h'],':')===false)		$conf[0]['h'] .= ":".$_SERVER['SINASRV_DB_PORT'] ;
         if(strpos($conf[0]['s']['h'],':')===false)		$conf[0]['s']['h'] .= ":".$_SERVER['SINASRV_DB_PORT_R'] ;
         return $conf;
-    }
-
-    /**
-     * 返回主库或从库服务的ip、端口配置
-     *
-     * @return array 配置字符串
-     */
-    static function getConfigKey($db='',$slave=true)
-    {
-        //初始化
-        $default= $slave ? 'SINASRV_DB_HOST_R' : 'SINASRV_DB_HOST';
-
-        $host=str_replace('.','_',strtolower($_SERVER["HTTP_HOST"]));
-
-        //-------注意顺序---------------
-        $dbNames = array();
-        //1.共用库特殊处理: db@citycode
-        if( self::isUnique2SplitDB($db) && defined('CITY_EN')){
-            $dbNames[] = "{$db}@".CITY_EN;		//1.SINASRV_DB_HOST_R:db_fangyou@sh       172.16.161.218;
-        }
-        //2.正常处理: db
-        $dbNames[]=$db;
-        //3.默认处理: 空
-        $dbNames[]='';
-
-        //-----从库选择顺序 ------------
-        $slaveKey=array();
-        foreach($dbNames as $dbname){
-            $slaveKey[] = "{$default}:{$host}".(!empty($dbname) ? ":{$dbname}":'');	//1. SINASRV_DB_HOST_R:service_fangyou_com:db_fangyou@sh , SINASRV_DB_HOST_R:service_fangyou_com:sh
-            $slaveKey[] = "{$default}".(!empty($dbname) ? ":{$dbname}":'');			//2.SINASRV_DB_HOST_R:sh       172.16.161.218;
-        }
-
-        //s($slaveKey);
-        //s($_SERVER);
-        //---------先设置默认值，再遍历	--------------
-        foreach($slaveKey as $key){
-            if(isset($_SERVER[$key]) && !empty($_SERVER[$key])){
-                $default = $key;
-                break;
-            }
-        }
-
-        //s($default,1 );
-        return $default;
     }
 
     static function isUnique2SplitDB($db){

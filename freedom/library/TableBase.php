@@ -1,9 +1,9 @@
 <?php
 namespace library;
 
-abstract class TableBase extends \library\Mysql
+class TableBase extends \library\Mysql
 {
-    protected  $_dbname;
+
 	protected  $_charset;
 	protected  $_name;
 	protected  $_primarykey = 'id';
@@ -15,17 +15,18 @@ abstract class TableBase extends \library\Mysql
 		$this->_dbname = $GLOBALS['DBConfig'][$this->_db_config]['database'];
 	}
 
-    final public function getAdapter($dbname='') {
+    final public function getAdapter() {
 		//读取库名
 		if(  !$this->_adapter){
 			$character=(isset($this->_charset)?$this->_charset : '');
-			//if($this->_name=='wx_user_fans')
-			if($this->_dbname=='weixin2014_fans')
-			{
-				$character='utf8mb4';
-			}
-			$dbname	=  $this->_dbname;			//EcSysTable=>'shop_admin'
-			$conf=self::getDbConfig($dbname,  $character);
+
+//			if($this->_dbname=='wx_user_fans')
+//			{
+//				$character='utf8mb4';
+//			}
+
+			$dbname	=  $this->_db_config;			//EcSysTable=>'shop_admin'
+			$conf = self::getDbConfig($dbname,  $character);
 			$this->_adapter=new Mysql($conf);  //拿到一个implode(','conf['s]).implode(',',conf)=>这个conf里面不包括conf['s]了
 		}
 		Return $this->_adapter;
@@ -219,7 +220,6 @@ abstract class TableBase extends \library\Mysql
 	final public function switchDB($database,$charset=''){
 		$conf=self::getDbConfig($database,$charset);
 		$this->_adapter=new Mysql($conf);
-		//s($dbName);
 	}
 
 	/**
