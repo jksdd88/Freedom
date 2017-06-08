@@ -15,15 +15,7 @@ ini_set('include_path',
 	. ini_get('include_path')
 );
 
-if (APP_DEBUG === $GLOBALS['Freedom']['APP_DEBUG']) {
-    error_reporting(E_ALL ^ E_NOTICE);
-    ini_set('display_errors','On');
-} else {
-    error_reporting(E_ALL);
-    ini_set('display_errors','Off');
-    ini_set('log_errors', 'On');
-    ini_set('error_log', RUNDATA_PATH. 'logs/error.log');
-}
+
 
 function __autoload($className)
 {
@@ -35,6 +27,16 @@ require CONFIG_PATH . 'Config.php';
 require FREEDOM_PATH . 'Model.php';
 require FREEDOM_PATH . 'Controller.php';
 require FREEDOM_PATH . 'PubFun.php';
+
+if (APP_DEBUG === $GLOBALS['Freedom']['APP_DEBUG']) {
+	error_reporting(E_ALL ^ E_NOTICE);
+	ini_set('display_errors','On');
+} else {
+	error_reporting(E_ALL);
+	ini_set('display_errors','Off');
+	ini_set('log_errors', 'On');
+	ini_set('error_log', RUNDATA_PATH. 'logs/error.log');
+}
 
 foreach($GLOBALS['AppSpace'] as $subname=>$module){
 	foreach($module["domain"] as $key=>$val)

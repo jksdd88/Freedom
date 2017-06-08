@@ -260,13 +260,32 @@ abstract class TableBase extends \library\Mysql
 
     public function filterBadWord($data)
     {
-        return $this->_is_filter ? PubFun::filter_badword_array($data) : $data;
+        return $this->_is_filter ? self::filter_badword_array($data) : $data;	//过滤
     }
 
-    public function isFilter($is)
-    {
-        $this->_is_filter = $is;
-    }
+	/**
+	 * 用于db输出过滤处理
+	 * @param $data
+	 * @return array|mixed
+	 */
+	static function filter_badword_array($data)
+	{
+		$file_keyword=self::get_filter_xxsword();
+		if(!is_array($data))
+		{
+			return is_string($data)?str_ireplace($file_keyword,'',$data):$data;
+		}
+		foreach($data as $key=>$val)
+		{
+			$data[$key] = self::filter_badword_array($val);
+		}
+		return $data;
+	}
+
+	static function get_filter_xxsword()
+	{
+		return array("init_src","onerror","eval(","unescape","document","navigator","indexOf","MicroMessenger","appendChild","getElementsBy","outerHTML","script","setTimeout","function","getScript",".js","onabort","onactivate","onafterprint","onafterupdate","onbeforeactivate","onbeforecopy","onbeforecut","onbeforedeactivate","onbeforeeditfocus","onbeforepaste","onbeforeprint","onbeforeunload","onbeforeupdate","onblur","onbounce","oncellchange","onchange","oncontextmenu","oncontrolselect","oncopy","oncut","ondataavailable","ondatasetchanged","ondatasetcomplete","ondblclick","ondeactivate","ondrag","ondragend","ondragenter","ondragleave","ondragover","ondragstart","ondrop","onerrorupdate","onfilterchange","onfinish","onfocus","onfocusin","onfocusout","onhelp","onkeydown","onkeypress","onkeyup","onlayoutcomplete","onload","onlosecapture","onmousedown","onmouseenter","onmouseleave","onmousemove","onmouseout","onmouseover","onmouseup","onmousewheel","onmove","onmoveend","onmovestart","onpaste","onpropertychange","onreadystatechange","onreset","onresize","onresizeend","onresizestart","onrowenter","onrowexit","onrowsdelete","onrowsinserted","onscroll","onselect","onselectionchange","onselectstart","onstart","onstop","onsubmit","onunload","fromcharcode","user(","alert(","expression","innerHTML","innerText","javascript","vbscript","<applet",".xml","<object","<frameset","<ilayer","<layer","<bgsound");//,"<meta",,"<iframe","<frame","onclick"
+	}
 }
 
 
