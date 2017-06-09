@@ -2,7 +2,7 @@
 
 $GLOBALS['AppSpace'] = array(
 		'app1'	=>	array(
-				'domain'	=>	array('freedom.com')
+				'domain'	=>	array('freedom.com','freedom.sqldo.com')
 		)
 );
 
