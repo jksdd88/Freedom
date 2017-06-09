@@ -35,4 +35,4 @@
          :,, , ::::::::i:::i:::i:i::,,,,,:,::i:i:::iir;@Secbone.ii::: 
 */
 
-require '../freedom/library/freedom.php';
+require '../freedom/library/Freedom.php';
