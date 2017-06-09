@@ -20,7 +20,7 @@ ini_set('include_path',
 function __autoload($className)
 {
 	$className = explode('\\',$className);
-	require_once strtolower($className[1]).".php";
+	require_once $className[1].".php";
 }
 
 require CONFIG_PATH . 'Config.php';
