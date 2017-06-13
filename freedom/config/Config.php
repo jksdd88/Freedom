@@ -2,7 +2,11 @@
 
 $GLOBALS['AppSpace'] = array(
 		'app1'	=>	array(
-				'domain'	=>	array('freedom.com','freedom.sqldo.com')
+				'domain'	=>	array(
+					'develop' => array('freedom.com','www.freedom.com'),
+					'test' => array(),
+					'production' => array('freedom.sqldo.com','www.sqldo.com'),
+				)
 		)
 );
 
@@ -16,10 +20,18 @@ $GLOBALS['Smarty'] = array(
 		'template_dir' 	=> APP_PATH . 'views',
 		'cache_dir' 		=> RUNDATA_PATH . 'smarty/cache',
 		'config_dir' 		=> RUNDATA_PATH . 'smarty/configs',
-		'plugins_dir' 		=> RUNDATA_PATH . 'smarty/plugins',
-		'compile_dir' 		=> RUNDATA_PATH . 'smarty/templates_c',
+		'plugins_dir' 	=> RUNDATA_PATH . 'smarty/plugins',
+		'compile_dir' 	=> RUNDATA_PATH . 'smarty/templates_c',
 		'left_delimiter' 	=> '{{',
-		'right_delimiter' 	=> '}}',
+		'right_delimiter'=> '}}',
+		'source_domain' 	=> array(
+
+			'app1' =>	array(
+				'develop' => 'http://s.freedom.com',
+				'test' => '',
+				'production' => 'http://s.sqldo.com',
+			),
+		)
 );
 
 $GLOBALS['Freedom'] = array(

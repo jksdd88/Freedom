@@ -15,8 +15,6 @@ ini_set('include_path',
 	. ini_get('include_path')
 );
 
-
-
 function __autoload($className)
 {
 	$className = explode('\\',$className);
@@ -28,6 +26,7 @@ require FREEDOM_PATH . 'Model.php';
 require FREEDOM_PATH . 'Controller.php';
 require FREEDOM_PATH . 'PubFun.php';
 
+//打印报错信息
 if (APP_DEBUG === $GLOBALS['Freedom']['APP_DEBUG']) {
 	error_reporting(E_ALL ^ E_NOTICE);
 	ini_set('display_errors','On');
@@ -38,24 +37,28 @@ if (APP_DEBUG === $GLOBALS['Freedom']['APP_DEBUG']) {
 	ini_set('error_log', RUNDATA_PATH. 'logs/error.log');
 }
 
-foreach($GLOBALS['AppSpace'] as $subname=>$module){
-	foreach($module["domain"] as $key=>$val)
+foreach($GLOBALS['AppSpace'] as $subname => $module)
+{
+	foreach($module["domain"] as $key => $val)
 	{
-		if(HTTP_HOST==$val){
-			define('SYS_MODULE',$subname);
-			define("BASE_DOMAIN",'http://'.$val);
-			break;
+		foreach($module["domain"][$key] as $key_s => $vals)
+		{
+			if(HTTP_HOST == $vals) {
+				define('SYS_MODULE',$subname);
+				define("SYS_RELEASE",$key);
+				define("BASE_DOMAIN",'http://'.$vals);
+				break;
+			}
 		}
+
 	}
 }
 
-if(empty(defined('SYS_MODULE'))){
+if(empty(defined('SYS_MODULE'))) {
 	smarty_display(array() , '404.tpl');
 	exit;
 }
 
 //核心框架类
-//require FREEDOM_PATH . 'Core.php';
-
 $core = new \library\Core();
 $core -> run();

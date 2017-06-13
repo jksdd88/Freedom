@@ -3,14 +3,15 @@
 class  IndexController extends \library\Controller
 {
  	function indexAction(){
+		s('My name is WebTest.');
 // 	    phpinfo();
 //        save_log(123,'abc');
 //		s(date('Y-m-d H:i:s',time()+60));exit;
 //		$a = debug_backtrace();
 //		$b = debug_print_backtrace();
-		$a = new EnglishWords();
-		$a->debug();
-		$a -> select_list('select * from english_words where 1');
+//		$a = new EnglishWords();
+//		$a->debug();
+//		$a -> select_list('select * from english_words where 1');
 
 // 		$this->display(array(),"index.tpl");
  	}
@@ -18,5 +19,9 @@ class  IndexController extends \library\Controller
 	function aAction(){
 		salog('abc');
 		echo 1;
+	}
+
+	function infoAction(){
+		phpinfo();
 	}
 }

@@ -24,7 +24,7 @@ function smarty_display($data , $tpl_path , $template_dir =  ''){
 	$smarty->right_delimiter = $GLOBALS['Smarty']['right_delimiter'];
 	 
 	//      $smarty->testInstall();		//Smarty测试
-	
+	$data['source_domain'] = $GLOBALS['Smarty']['source_domain'][SYS_MODULE][SYS_RELEASE];
 	if($data)	$smarty->assign($data);
 	$smarty->display($tpl_path);
 	
