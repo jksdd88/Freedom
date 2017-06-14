@@ -34,9 +34,9 @@ class Mysql
 
 
 
-    function Mysql($conf = null)
+    function __construct($conf = null)
     {
-        if($_GET["debug"])self::$debug=1;
+        if(isset($_GET["debug"]))self::$debug=1;
         // 如果未传入配置，则加载默认配置数组
         if (empty($conf))
         {
@@ -561,7 +561,6 @@ register_shutdown_function(function()
 
     foreach(Mysql::$LinkResArr as $link)
     {
-//		if (is_resource($link))
         if ($link)
         {
             mysqli_close($link);

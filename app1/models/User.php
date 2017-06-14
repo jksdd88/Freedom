@@ -1,6 +1,6 @@
 <?php
 
-class EnglishWords extends \library\Model
+class User extends \library\Model
 {
 	public $_db_config = 'db1';
     public $_name = 'user';
