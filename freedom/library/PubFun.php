@@ -12,6 +12,7 @@ function smarty_display($data , $tpl_path , $template_dir =  ''){
 	$smarty->caching = $GLOBALS['Smarty']['caching'];
 	$smarty->cache_lifetime = $GLOBALS['Smarty']['cache_lifetime'];
 	$smarty->template_dir = $template_dir == '' ? $GLOBALS['Smarty']['template_dir'] : $template_dir;
+	s($GLOBALS['Smarty']['cache_dir']);
 	if (!is_dir($GLOBALS['Smarty']['cache_dir'] . '/' . SYS_MODULE))		mkdir($GLOBALS['Smarty']['cache_dir'] . '/' . SYS_MODULE);
 	$smarty->cache_dir = $GLOBALS['Smarty']['cache_dir'] . '/' . SYS_MODULE;
 	 
