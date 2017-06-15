@@ -1,6 +1,6 @@
 <?php
 
-namespace database;
+namespace library\database;
 
 class Mysql
 {

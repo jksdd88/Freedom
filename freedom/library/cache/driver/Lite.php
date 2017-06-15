@@ -9,47 +9,57 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-namespace think\cache\driver;
-
-use think\cache\Driver;
+namespace cache\driver;
 
 /**
- * Xcache缓存驱动
+ * 文件类型缓存类
  * @author    liu21st <liu21st@gmail.com>
  */
-class Xcache extends Driver
+class Lite extends cache\Driver
 {
     protected $options = [
         'prefix' => '',
-        'expire' => 0,
+        'path'   => '',
+        'expire' => 0, // 等于 10*365*24*3600（10年）
     ];
 
     /**
      * 构造函数
-     * @param array $options 缓存参数
      * @access public
-     * @throws \BadFunctionCallException
+     *
+     * @param array $options
      */
     public function __construct($options = [])
     {
-        if (!function_exists('xcache_info')) {
-            throw new \BadFunctionCallException('not support: Xcache');
-        }
         if (!empty($options)) {
             $this->options = array_merge($this->options, $options);
         }
+        if (substr($this->options['path'], -1) != DS) {
+            $this->options['path'] .= DS;
+        }
+
     }
 
     /**
-     * 判断缓存
+     * 取得变量的存储文件名
+     * @access protected
+     * @param string $name 缓存变量名
+     * @return string
+     */
+    protected function getCacheKey($name)
+    {
+        return $this->options['path'] . $this->options['prefix'] . md5($name) . '.php';
+    }
+
+    /**
+     * 判断缓存是否存在
      * @access public
      * @param string $name 缓存变量名
-     * @return bool
+     * @return mixed
      */
     public function has($name)
     {
-        $key = $this->getCacheKey($name);
-        return xcache_isset($key);
+        return $this->get($name) ? true : false;
     }
 
     /**
@@ -61,32 +71,49 @@ class Xcache extends Driver
      */
     public function get($name, $default = false)
     {
-        $key = $this->getCacheKey($name);
-        return xcache_isset($key) ? xcache_get($key) : $default;
+        $filename = $this->getCacheKey($name);
+        if (is_file($filename)) {
+            // 判断是否过期
+            $mtime = filemtime($filename);
+            if ($mtime < $_SERVER['REQUEST_TIME']) {
+                // 清除已经过期的文件
+                unlink($filename);
+                return $default;
+            }
+            return include $filename;
+        } else {
+            return $default;
+        }
     }
 
     /**
      * 写入缓存
-     * @access public
-     * @param string    $name 缓存变量名
-     * @param mixed     $value  存储数据
-     * @param integer   $expire  有效时间（秒）
-     * @return boolean
+     * @access   public
+     * @param string    $name  缓存变量名
+     * @param mixed     $value 存储数据
+     * @param int       $expire 有效时间 0为永久
+     * @return bool
      */
     public function set($name, $value, $expire = null)
     {
         if (is_null($expire)) {
             $expire = $this->options['expire'];
         }
-        if ($this->tag && !$this->has($name)) {
+        // 模拟永久
+        if (0 === $expire) {
+            $expire = 10 * 365 * 24 * 3600;
+        }
+        $filename = $this->getCacheKey($name);
+        if ($this->tag && !is_file($filename)) {
             $first = true;
         }
-        $key = $this->getCacheKey($name);
-        if (xcache_set($key, $value, $expire)) {
-            isset($first) && $this->setTagItem($key);
-            return true;
+        $ret = file_put_contents($filename, ("<?php return " . var_export($value, true) . ";"));
+        // 通过设置修改时间实现有效期
+        if ($ret) {
+            isset($first) && $this->setTagItem($filename);
+            touch($filename, $_SERVER['REQUEST_TIME'] + $expire);
         }
-        return false;
+        return $ret;
     }
 
     /**
@@ -98,8 +125,12 @@ class Xcache extends Driver
      */
     public function inc($name, $step = 1)
     {
-        $key = $this->getCacheKey($name);
-        return xcache_inc($key, $step);
+        if ($this->has($name)) {
+            $value = $this->get($name) + $step;
+        } else {
+            $value = $step;
+        }
+        return $this->set($name, $value, 0) ? $value : false;
     }
 
     /**
@@ -111,8 +142,12 @@ class Xcache extends Driver
      */
     public function dec($name, $step = 1)
     {
-        $key = $this->getCacheKey($name);
-        return xcache_dec($key, $step);
+        if ($this->has($name)) {
+            $value = $this->get($name) - $step;
+        } else {
+            $value = $step;
+        }
+        return $this->set($name, $value, 0) ? $value : false;
     }
 
     /**
@@ -123,14 +158,14 @@ class Xcache extends Driver
      */
     public function rm($name)
     {
-        return xcache_unset($this->getCacheKey($name));
+        return unlink($this->getCacheKey($name));
     }
 
     /**
      * 清除缓存
-     * @access public
+     * @access   public
      * @param string $tag 标签名
-     * @return boolean
+     * @return bool
      */
     public function clear($tag = null)
     {
@@ -138,15 +173,11 @@ class Xcache extends Driver
             // 指定标签清除
             $keys = $this->getTagItem($tag);
             foreach ($keys as $key) {
-                xcache_unset($key);
+                unlink($key);
             }
             $this->rm('tag_' . md5($tag));
             return true;
         }
-        if (function_exists('xcache_unset_by_prefix')) {
-            return xcache_unset_by_prefix($this->options['prefix']);
-        } else {
-            return false;
-        }
+        array_map("unlink", glob($this->options['path'] . ($this->options['prefix'] ? $this->options['prefix'] . DS : '') . '*.php'));
     }
 }

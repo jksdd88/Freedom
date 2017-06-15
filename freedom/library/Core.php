@@ -117,11 +117,18 @@ class  Core
 
 	// 自动加载控制器和模型类
 	final function loadClass($class)
-	{	
-		$frameworks = FREEDOM_PATH . $class . '.php';
-		$controllers = APP_PATH . 'controllers/' . $class . '.php';
-		$models = APP_PATH . 'models/' . $class . '.php';
-		
+	{
+		$class = explode('\\',str_ireplace('library\\' , '' , $class));
+		$class_dir = '';
+
+		foreach($class as $val){
+			$class_dir .= '/' . $val;
+		}
+
+		$frameworks = FREEDOM_PATH . $class_dir . '.php';
+		$controllers = APP_PATH . 'controllers' . $class_dir . '.php';
+		$models = APP_PATH . 'models' . $class_dir . '.php';
+
 		if (file_exists($frameworks)) {
 			// 加载框架核心类
 			include $frameworks;

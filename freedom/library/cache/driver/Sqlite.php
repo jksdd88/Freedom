@@ -11,13 +11,11 @@
 
 namespace think\cache\driver;
 
-use think\cache\Driver;
-
 /**
  * Sqlite缓存驱动
  * @author    liu21st <liu21st@gmail.com>
  */
-class Sqlite extends Driver
+class Sqlite extends cache\Driver
 {
     protected $options = [
         'db'         => ':memory:',

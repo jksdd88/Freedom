@@ -1,8 +1,8 @@
 <?php
 
-namespace database;
+namespace library\database;
 
-abstract class Model extends \database\TableBase
+abstract class Model extends \library\database\TableBase
 {
 
 	//是否含有cuid、cdate等记录备注字段
@@ -20,15 +20,11 @@ abstract class Model extends \database\TableBase
 	/*
 	*	构造函数，检查设置缓存唯一标识字段
 	*/
-	 function __construct() {
+	function __construct() {
 
 		$this->_unique_field = !empty($this->_unique_field) ? $this->_unique_field : $this->_primarykey  ;
         parent::__construct();
-	 }
-
-
-
-
+	}
 
 	/**
      * 设置是否含有cuid、cdate等记录备注字段
@@ -36,8 +32,6 @@ abstract class Model extends \database\TableBase
 	 public function setExtra($_has_cache) {
 		$this->_has_extra =$_has_cache;
 	}
-
-
 
 
 	/**
@@ -129,9 +123,8 @@ abstract class Model extends \database\TableBase
 			if($frontController->throwExceptions()){
 			}
 		}
-
-
 	}
+
 
     /**
      * 增加一条记录
@@ -203,11 +196,6 @@ abstract class Model extends \database\TableBase
 		}
 		return 	$ret;
 	}
-
-
-
-
-
 
 }
 

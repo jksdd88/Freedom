@@ -1,5 +1,6 @@
 <?php
 namespace library;
+
 class  Controller{
 	
  	protected $_controller;

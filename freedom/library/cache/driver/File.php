@@ -9,15 +9,13 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-namespace think\cache\driver;
-
-use think\cache\Driver;
+namespace cache\driver;
 
 /**
  * 文件类型缓存类
  * @author    liu21st <liu21st@gmail.com>
  */
-class File extends Driver
+class File extends cache\Driver
 {
     protected $options = [
         'expire'        => 0,

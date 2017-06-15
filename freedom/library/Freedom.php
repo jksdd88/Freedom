@@ -29,8 +29,6 @@ function __autoload($className)
 }
 
 require CONFIG_PATH . 'Config.php';
-require INCLUDE_PATH . 'database/Model.php';
-require FREEDOM_PATH . 'Controller.php';
 require FREEDOM_PATH . 'PubFun.php';
 
 //打印报错信息

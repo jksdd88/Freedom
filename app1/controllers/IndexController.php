@@ -13,6 +13,7 @@ class  IndexController extends \library\Controller
 		$a->debug();
 		$a -> select_list('select * from user where 1=1');
 
+		\library\Cache::
  		$this->display(array(),"index.tpl");
  	}
 

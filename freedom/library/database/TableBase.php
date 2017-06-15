@@ -1,7 +1,7 @@
 <?php
-namespace database;
+namespace library\database;
 
-class TableBase extends \database\Mysql
+class TableBase
 {
 
 	protected  $_charset;
@@ -27,7 +27,7 @@ class TableBase extends \database\Mysql
 
 			$dbname	=  $this->_db_config;			//EcSysTable=>'shop_admin'
 			$conf = self::getDbConfig($dbname,  $character);
-			$this->_adapter=new Mysql($conf);  //拿到一个implode(','conf['s]).implode(',',conf)=>这个conf里面不包括conf['s]了
+			$this->_adapter = new Mysql($conf);  //拿到一个implode(','conf['s]).implode(',',conf)=>这个conf里面不包括conf['s]了
 		}
 		Return $this->_adapter;
 	}
