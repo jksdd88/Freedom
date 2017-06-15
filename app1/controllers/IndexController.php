@@ -10,9 +10,10 @@ class  IndexController extends \library\Controller
 //		$a = debug_backtrace();
 //		$b = debug_print_backtrace();
 		$a = new User();
+		$a->debug();
 		$a -> select_list('select * from user where 1=1');
 
-// 		$this->display(array(),"index.tpl");
+ 		$this->display(array(),"index.tpl");
  	}
 
 	function aAction(){

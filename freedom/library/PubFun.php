@@ -1,11 +1,11 @@
 <?php
 
 function smarty_display($data , $tpl_path , $template_dir =  ''){
-	
-	
-	include_once INCLUDE_PATH . 'smarty/Smarty.class.php';
+
+
+	include_once 'Smarty.class.php';
 	$smarty = new Smarty();
-	
+
 	$smarty->force_compile = $GLOBALS['Smarty']['force_compile'];
 	$smarty->compile_check = $GLOBALS['Smarty']['compile_check'];
 	$smarty->debugging = $GLOBALS['Smarty']['debugging'];
@@ -25,6 +25,7 @@ function smarty_display($data , $tpl_path , $template_dir =  ''){
 	 
 	//      $smarty->testInstall();		//Smarty测试
 	$data['source_domain'] = $GLOBALS['Smarty']['source_domain'][SYS_MODULE][SYS_RELEASE];
+
 	if($data)	$smarty->assign($data);
 	$smarty->display($tpl_path);
 	

@@ -1,7 +1,7 @@
 <?php
-namespace library;
+namespace database;
 
-class TableBase extends \library\Mysql
+class TableBase extends \database\Mysql
 {
 
 	protected  $_charset;
