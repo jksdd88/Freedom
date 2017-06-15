@@ -17,6 +17,7 @@ class  IndexController extends \library\Controller
  	}
 
 	function aAction(){
+		save_log('aaa','test');
 		salog('abc');
 		echo 1;
 	}
