@@ -3,7 +3,7 @@ use \library\Cache;
 class  IndexController extends \library\Controller
 {
  	function indexAction(){
-		s('My name is WebTest.');
+		s('Hi,I\'m Freedom.');
 		// 		$included_files = get_included_files();
 // 		foreach ($included_files as $filename) {
 // 			echo "$filename<br>";
