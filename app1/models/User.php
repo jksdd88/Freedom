@@ -1,6 +1,6 @@
 <?php
 
-class User extends \library\database\Model
+class User extends \database\Model
 {
 	public $_db_config = 'db1';
     public $_name = 'user';

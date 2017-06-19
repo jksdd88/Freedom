@@ -1,5 +1,5 @@
 <?php
-namespace library\database;
+namespace database;
 
 class TableBase
 {

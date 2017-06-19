@@ -15,7 +15,7 @@ namespace think\cache\driver;
  * Xcache缓存驱动
  * @author    liu21st <liu21st@gmail.com>
  */
-class Xcache extends cache\Driver
+class Xcache extends \cache\Driver
 {
     protected $options = [
         'prefix' => '',

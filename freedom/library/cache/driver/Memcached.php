@@ -12,7 +12,7 @@
 namespace cache\driver;
 
 
-class Memcached extends cache\Driver
+class Memcached extends \cache\Driver
 {
     protected $options = [
         'host'     => '127.0.0.1',

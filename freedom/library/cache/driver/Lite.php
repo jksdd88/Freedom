@@ -15,7 +15,7 @@ namespace cache\driver;
  * 文件类型缓存类
  * @author    liu21st <liu21st@gmail.com>
  */
-class Lite extends cache\Driver
+class Lite extends \cache\Driver
 {
     protected $options = [
         'prefix' => '',

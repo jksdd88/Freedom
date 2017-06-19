@@ -18,7 +18,7 @@ namespace think\cache\driver;
  * 要求安装phpredis扩展：https://github.com/nicolasff/phpredis
  * @author    尘缘 <130775@qq.com>
  */
-class Redis extends cache\Driver
+class Redis extends \cache\Driver
 {
     protected $options = [
         'host'       => '127.0.0.1',

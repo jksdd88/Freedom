@@ -15,7 +15,7 @@ namespace think\cache\driver;
  * Wincache缓存驱动
  * @author    liu21st <liu21st@gmail.com>
  */
-class Wincache extends cache\Driver
+class Wincache extends \cache\Driver
 {
     protected $options = [
         'prefix' => '',

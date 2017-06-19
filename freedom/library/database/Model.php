@@ -1,8 +1,8 @@
 <?php
 
-namespace library\database;
+namespace database;
 
-abstract class Model extends \library\database\TableBase
+abstract class Model extends \database\TableBase
 {
 
 	//是否含有cuid、cdate等记录备注字段

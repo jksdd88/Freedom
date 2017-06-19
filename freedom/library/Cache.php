@@ -1,7 +1,6 @@
 <?php
-namespace library;
 
-use cache\Driver;
+namespace library;
 
 class Cache
 {
@@ -31,10 +30,10 @@ class Cache
         }
 
         if (true === $name || !isset(self::$instance[$name])) {
-            $class = false !== strpos($type, '\\') ? $type : '\\think\\cache\\driver\\' . ucwords($type);
+            $class = false !== strpos($type, '\\') ? $type : '\\cache\\driver\\' . ucwords($type);
 
             // 记录初始化信息
-            App::$debug && Log::record('[ CACHE ] INIT ' . $type, 'info');
+            save_log('[ CACHE ] INIT ' . $type, 'info','cache');
             if (true === $name) {
                 return new $class($options);
             } else {
@@ -56,10 +55,8 @@ class Cache
             // 自动初始化缓存
             if (!empty($options)) {
                 $connect = self::connect($options);
-            } elseif ('complex' == Config::get('cache.type')) {
-                $connect = self::connect(Config::get('cache.default'));
-            } else {
-                $connect = self::connect(Config::get('cache'));
+            }else {
+                $connect = self::connect($GLOBALS['cache']);
             }
             self::$handler = $connect;
         }
@@ -74,10 +71,9 @@ class Cache
      */
     public static function store($name = '')
     {
-        if ('' !== $name && 'complex' == Config::get('cache.type')) {
-            return self::connect(Config::get('cache.' . $name), strtolower($name));
-        }
-        return self::init();
+        $config = $GLOBALS['cache'];
+        $config['type'] = $name;
+        return self::connect($config, strtolower($name));
     }
 
     /**

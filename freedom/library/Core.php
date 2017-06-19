@@ -3,15 +3,9 @@ namespace library;
 
 class  Core
 {
-	
 	// 运行程序
 	final function run()
 	{
-// 		$included_files = get_included_files();
-// 		foreach ($included_files as $filename) {
-// 			echo "$filename<br>";
-// 		}
-
 		spl_autoload_register(array($this, 'loadClass'));
 		$this->setReporting();
 		$this->removeMagicQuotes();
@@ -66,7 +60,38 @@ class  Core
 	// 检测开发环境
 	final function setReporting()
 	{
+		foreach($GLOBALS['AppSpace'] as $subname => $module)
+		{
+			foreach($module["domain"] as $key => $val)
+			{
+				foreach($module["domain"][$key] as $key_s => $vals)
+				{
+					if(HTTP_HOST == $vals) {
+						define('SYS_MODULE',$subname);
+						define("SYS_RELEASE",$key);
+						define("BASE_DOMAIN",'http://'.$vals);
+						break;
+					}
+				}
 
+			}
+		}
+
+		//打印报错信息
+		if (SYS_RELEASE === 'develop') {
+			error_reporting(E_ALL ^ E_NOTICE);
+			ini_set('display_errors','On');
+		} else {
+			error_reporting(E_ALL);
+			ini_set('display_errors','Off');
+			ini_set('log_errors', 'On');
+			ini_set('error_log', RUNDATA_PATH. 'logs/error.log');
+		}
+
+		if(empty(defined('SYS_MODULE'))) {
+			smarty_display(array() , '404.tpl');
+			exit;
+		}
 	}
 
 	// 删除敏感字符
@@ -126,18 +151,19 @@ class  Core
 		}
 
 		$frameworks = FREEDOM_PATH . $class_dir . '.php';
+
 		$controllers = APP_PATH . 'controllers' . $class_dir . '.php';
 		$models = APP_PATH . 'models' . $class_dir . '.php';
 
 		if (file_exists($frameworks)) {
 			// 加载框架核心类
-			include $frameworks;
+			require_once $frameworks;
 		} elseif (file_exists($controllers)) {
 			// 加载应用控制器类
-			include $controllers;
+			require_once $controllers;
 		} elseif (file_exists($models)) {
 			//加载应用模型类
-			include $models;
+			require_once $models;
 		}
 	}
 }
