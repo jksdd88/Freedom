@@ -92,6 +92,8 @@ class  Core
 			smarty_display(array() , '404.tpl');
 			exit;
 		}
+
+		require APP_PATH . 'config/Config.php';
 	}
 
 	// 删除敏感字符

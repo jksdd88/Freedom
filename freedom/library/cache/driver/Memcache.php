@@ -1,13 +1,4 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2017 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
-// +----------------------------------------------------------------------
 
 namespace cache\driver;
 
@@ -20,7 +11,7 @@ class Memcache extends \cache\Driver
         'expire'     => 0,
         'timeout'    => 0, // 超时时间（单位：毫秒）
         'persistent' => true,
-        'prefix'     => '',
+        'prefix'     => 'asda',
     ];
 
     /**

@@ -92,3 +92,27 @@ function salog($txt , $filename = 'log' , $flag = true)
 	slog($txt , $filename);  //一般日志
 //	slog('msg','log','color:red;font-size:20px;');//自定义日志的样式，第三个参数为css样式
 }
+
+
+function get_session($key='') {
+	Return $key? (isset($_SESSION[$key]) ? $_SESSION[$key] : null ) : $_SESSION ;
+}
+
+function set_session($key,$val='') {
+	if(is_array($key)){
+		foreach($key as $k=>$v) {
+			$_SESSION[$k]=$v;
+		}
+	}else{
+		$_SESSION[$key]=$val;
+	}
+}
+function unset_session($key) {
+	$_SESSION[$key]=null;
+	unset($_SESSION[$key]);
+}
+
+function clear_session() {
+	session_unset();
+
+}

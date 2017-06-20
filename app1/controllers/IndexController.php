@@ -1,5 +1,7 @@
 <?php
+
 use \library\Cache;
+
 class  IndexController extends \library\Controller
 {
  	function indexAction(){
@@ -17,12 +19,15 @@ class  IndexController extends \library\Controller
 //		$a->debug();
 //		$a -> select_list('select * from user where 1=1');
 
-		Cache::set('aaa','aaa');
-		s(Cache::get('aaa'));
+//		Cache::set('aaa','111');
+//		s(Cache::get('aaa'));
+//		set_session('abc',222);
+//		s(get_session('abc'));
  		$this->display(array(),"index.tpl");
  	}
 
 	function aAction(){
+		s(get_session('abc'));exit;
 		save_log('aaa','test');
 		salog('abc');
 		echo 1;

@@ -60,7 +60,7 @@ $GLOBALS['DBConfig'] = array(
 
 $GLOBALS['cache'] = array(
 	// 驱动方式
-	'type'   => 'File',
+	'type'   => 'Redis',
 	// 缓存保存目录
 	'path'   => RUNDATA_PATH . 'caches/',
 	// 缓存前缀
