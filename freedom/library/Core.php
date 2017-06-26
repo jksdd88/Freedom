@@ -78,7 +78,7 @@ class  Core
 		}
 
 		//打印报错信息
-		if (!empty(SYS_RELEASE) && SYS_RELEASE === 'develop') {
+		if (empty(defined('SYS_RELEASE')) && SYS_RELEASE === 'develop') {
 			error_reporting(E_ALL ^ E_NOTICE);
 			ini_set('display_errors','On');
 		} else {
