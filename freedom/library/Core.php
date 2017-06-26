@@ -78,7 +78,7 @@ class  Core
 		}
 
 		//打印报错信息
-		if (!empty(defined('SYS_RELEASE')) && SYS_RELEASE === 'develop') {
+		if (SYS_RELEASE === 'develop') {
 			error_reporting(E_ALL ^ E_NOTICE);
 			ini_set('display_errors','On');
 		} else {
@@ -88,10 +88,10 @@ class  Core
 			ini_set('error_log', RUNDATA_PATH. 'logs/error.log');
 		}
 
-//		if(empty(defined('SYS_MODULE'))) {
-//			smarty_display(array() , '404.tpl');
-//			exit;
-//		}
+		if(empty(defined('SYS_MODULE'))) {
+			smarty_display(array() , '404.tpl');
+			exit;
+		}
 
 		require APP_PATH . 'config/Config.php';
 	}
