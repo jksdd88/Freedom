@@ -1,5 +1,5 @@
 <?php
-defined('FREEDOM_PATH') or define('FREEDOM_PATH', __DIR__.'/');
+defined('FREEDOM_PATH') or define('FREEDOM_PATH', __DIR__.'/../freedom');
 defined('RUNDATA_PATH') or define('RUNDATA_PATH', FREEDOM_PATH.'../../rundata/');
 define('SYS_MODULE', 'swoole');
 require FREEDOM_PATH . 'PubFun.php';
