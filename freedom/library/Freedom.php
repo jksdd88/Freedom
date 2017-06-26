@@ -6,7 +6,7 @@ defined('APP_PATH') or define('APP_PATH', dirname($_SERVER['SCRIPT_FILENAME']).'
 defined('CONFIG_PATH') or define('CONFIG_PATH', FREEDOM_PATH.'../config/');
 defined('INCLUDE_PATH') or define('INCLUDE_PATH', FREEDOM_PATH.'../include/');
 defined('RUNDATA_PATH') or define('RUNDATA_PATH', FREEDOM_PATH.'../../rundata/');
-defined('HTTP_HOST') or define('HTTP_HOST',strtolower($_SERVER["HTTP_HOST"]));
+!defined('HTTP_HOST') && isset($_SERVER["HTTP_HOST"]) ? define('HTTP_HOST',strtolower($_SERVER["HTTP_HOST"])) : true;
 
 $include_path = '';
 foreach(scandir(INCLUDE_PATH) as $values_path)
