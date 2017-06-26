@@ -116,3 +116,34 @@ function clear_session() {
 	session_unset();
 
 }
+
+function filter_str($str) {
+	Return filter_var($str,FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
+}
+
+function filter_int($str) {
+	Return filter_var($str,FILTER_VALIDATE_INT);
+}
+
+function filter_email($str) {
+	Return filter_var($str,FILTER_VALIDATE_EMAIL);
+}
+
+function filter_url($str) {
+	Return filter_var($str,FILTER_VALIDATE_URL);
+}
+
+function filter_float($str) {
+	Return filter_var($str,FILTER_VALIDATE_FLOAT);
+}
+
+function filter_js($str){
+	if(strpos($str,'youku.com')!==false || strpos($str,'video.sina')!==false || strpos($str,'letv.com')!==false  || strpos($str,'qq.com')!==false || strpos($str,'tudou.com')!==false  || strpos($str,'163.com')!==false)
+	{
+		return $str;
+	}
+	else
+	{
+		Return preg_replace("/<[^><]*script[^><]*>/i",'',$str);
+	}
+}
