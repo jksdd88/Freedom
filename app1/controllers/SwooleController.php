@@ -10,10 +10,10 @@ class  SwooleController extends \library\Controller
 
 		//每隔2000ms触发一次
 		$id = swoole_timer_tick(2000, function ($timer_id) {
-			save_log('swoole_timer_tick > '.json_encode($timer_id),'swoole');
+			save_log('swoole_timer_tick > '.json_encode($timer_id).' time > '.time(),'swoole');
 		});
 
-		//可以使用 swoole_timer_clear 清除此定时器，参数为定时器ID
+		//可以使用 swoole_timer_clear 清除swoole_timer_tick or swoole_timer_after定时器，参数为定时器ID
 		swoole_timer_clear($id);
  	}
 
@@ -24,9 +24,8 @@ class  SwooleController extends \library\Controller
 	function timerafterAction(){
 
 		//3000ms后执行此函数
-		$time_nowa = time();
 		swoole_timer_after(3000, function () {
-			save_log('swoole_timer_tick > '. $time_nowa . ' '.time(),'swoole');
+			save_log('swoole_timer_tick >'.time(),'swoole');
 		});
 
 	}
