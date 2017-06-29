@@ -40,7 +40,7 @@ class  SwooleController extends \library\Controller
 			die("connect failed.");
 		}
 		//向服务器发送数据
-		if (!$client->send("hello world"))
+		if (!$client->send("hello world111"))
 		{
 			die("send failed.");
 		}
