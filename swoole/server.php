@@ -35,6 +35,13 @@ $serv->on('task', function ($serv, $task_id, $from_id, $data) {
     $serv->finish("$data -> OK");
 });
 
+
+//处理异步任务的结果
+$serv->on('finish', function ($serv, $task_id, $data) {
+    save_log('swoole_server > AsyncTask[$task_id] Finish: $data'.PHP_EOL;,'swoole');
+});
+
+
 //监听连接关闭事件
 $serv->on('close', function ($serv, $fd) {
     save_log('swoole_server > Client: Close.','swoole');
