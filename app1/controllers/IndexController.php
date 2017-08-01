@@ -21,14 +21,15 @@ class  IndexController extends \library\Controller
 		$a->update_data(array('username'=> 'aa1a'),' where id = 1');
 		$val = $a -> select_list('select * from user where 1=1');
 s($val);
-//		Cache::set('aaa','111');
-//		s(Cache::get('aaa'));
-//		set_session('abc',222);
+		Cache::set('aaa','111');
+		s(Cache::get('aaa'));
+		set_session('abc',222);
 //		s(get_session('abc'));
  		$this->display(array(),"index.tpl");
  	}
 
 	function aAction(){
+		s(session_id());
 		s(get_session('abc'));exit;
 		save_log('aaa','test');
 		salog('abc');
