@@ -11,7 +11,7 @@ namespace cache\driver;
 class Redis extends \cache\Driver
 {
     protected $options = [
-        'host'       => '139.196.46.137',
+        'host'       => '106.15.204.163',
         'port'       => 6379,
         'password'   => '',
         'select'     => 0,

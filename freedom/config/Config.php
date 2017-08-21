@@ -64,7 +64,7 @@ $GLOBALS['cache'] = array(
 	// 缓存保存目录
 	'path'   => RUNDATA_PATH . 'caches/',
 	// 缓存前缀
-	'prefix' => 'freedom',
+	'prefix' => 'freedom_',
 	// 缓存有效期 0表示永久缓存
 	'expire' => 7200,
 );
