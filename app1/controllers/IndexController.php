@@ -37,7 +37,7 @@ s($val);
 	}
 
 	function infoAction(){
-	    
+
         echo shell_exec("id -a");
 		phpinfo();
 	}
